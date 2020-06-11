@@ -7,7 +7,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
+@EnableSwagger2
 public class RestApiDemoApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
