@@ -1,0 +1,55 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7.27
+    container_name: mysql-restapidemo
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+    environment:
+      MYSQL_DATABASE: restapidemo
+      MYSQL_USER: restapidemo
+      MYSQL_PASSWORD: restapidemo
+      MYSQL_ROOT_PASSWORD: password
+      TZ: "Asia/Tokyo"
+    volumes: 
+      - .docker/mysql:/var/lib/mysql
+    ports:
+      - "13306:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-restapidemo
+    environment: 
+      PMA_HOST: mysql
+      TZ: Asia/Tokyo
+    ports:
+      - "10080:80"
+    depends_on: 
+      - mysql
+  redis:
+    image: redis
+    container_name: redis-restapidemo
+    environment: 
+      TZ: Asia/Tokyo
+    ports:
+      - "16379:6379"
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-restapidemo
+    volumes:
+      - .docker/jenkins_home:/var/jenkins_home
+    ports:
+      - "18082:8080"
+      - "50000:50000"
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus-restapidemo
+    volumes:
+      - .docker/sonatype-work:/sonatype-work
+    ports:
+      - "18081:8081"
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube-restapidemo
+    ports:
+      - "19000:9000"
+
+  

@@ -1,0 +1,30 @@
+server:
+  port: 18080
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/restapidemo?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: restapidemo
+    password: restapidemo
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
+    open-in-view: false
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  messages:
+    basename: ValidationMessages
+    encoding: UTF-8
+  redis:
+    host: localhost
+    port: 16379
+  session:
+    store-type: redis
+    redis:
+      namespace: airagohan-delivery-backend
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Tokyo
