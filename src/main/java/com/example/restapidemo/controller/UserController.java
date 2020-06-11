@@ -48,7 +48,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/users/{id}")
-	public User update(@PathVariable("id") Long id) {
+	public User get(@PathVariable("id") Long id) {
 		return userService.get(id);
 	}
 
