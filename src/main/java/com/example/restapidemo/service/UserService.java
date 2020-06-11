@@ -16,6 +16,8 @@ import com.example.restapidemo.exception.ValidationErrorException;
 
 /**
  * UserService
+ * 
+ * ユーザー関連のサービス
  *
  * @author Daisuke Wakita
  */
@@ -25,40 +27,79 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * ユーザーリストを取得
+	 * 
+	 * @return
+	 */
 	public List<User> list() {
 		return userRepository.findByOrderByUpdatedAtDesc();
 	}
 
+	/**
+	 * ユーザーを1件取得
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public User get(Long id) {
 		return userRepository.findById(id).orElseThrow();
 	}
 
+	/**
+	 * ユーザー作成
+	 * 
+	 * @param form
+	 * @param bindingResult
+	 * @return
+	 */
 	public User create(@Valid UserForm form, BindingResult bindingResult) {
 
+		// 入力エラーをチェック
 		if (bindingResult.hasErrors()) {
 			throw new RuntimeException();
 		}
 
+		// UserFormをUserにコピー
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
 
+		// 作成
 		return userRepository.save(user);
 	}
 
+	/**
+	 * ユーザーを更新
+	 * 
+	 * @param id
+	 * @param form
+	 * @param bindingResult
+	 * @return
+	 */
 	public User update(Long id, @Valid UserForm form, BindingResult bindingResult) {
 
+		// ユーザー取得
 		User user = userRepository.findById(id).orElseThrow();
 
+		// 入力エラーをチェック
 		if (bindingResult.hasErrors()) {
 			throw new ValidationErrorException(bindingResult);
 		}
 
+		// UserFormをUserにコピー
 		BeanUtils.copyProperties(form, user);
 
+		// 更新
 		return userRepository.save(user);
 	}
 
+	/**
+	 * ユーザー削除
+	 * 
+	 * @param id
+	 */
 	public void delete(Long id) {
+		// 削除。なかったら例外スロー。
 		userRepository.delete(userRepository.findById(id).orElseThrow());
 	}
 
