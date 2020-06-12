@@ -2,6 +2,8 @@ package com.example.restapidemo.exception;
 
 import org.springframework.validation.Errors;
 
+import lombok.Getter;
+
 /**
  * ValidationErrorException
  * 
@@ -12,27 +14,12 @@ import org.springframework.validation.Errors;
 @SuppressWarnings("serial")
 public class ValidationErrorException extends RuntimeException {
 
-	private Errors errors;
-
-	public ValidationErrorException() {
-		super();
-	}
-
-	public ValidationErrorException(String message) {
-		super(message);
-	}
-
-	public ValidationErrorException(Errors errors, String message) {
-		super(message);
-		this.errors = errors;
-	}
+	@Getter
+	private final Errors errors;
 
 	public ValidationErrorException(Errors errors) {
 		super();
 		this.errors = errors;
 	}
 
-	public Errors getErrors() {
-		return errors;
-	}
 }
