@@ -57,7 +57,7 @@ public class UserService {
 
 		// 入力エラーをチェック
 		if (bindingResult.hasErrors()) {
-			throw new RuntimeException();
+			throw new ValidationErrorException(bindingResult);
 		}
 
 		// UserFormをUserにコピー
