@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import com.example.restapidemo.controller.UserController.UserForm;
+import com.example.restapidemo.controller.form.UserForm;
 import com.example.restapidemo.data.entity.User;
 import com.example.restapidemo.data.repository.UserRepository;
 import com.example.restapidemo.exception.ValidationErrorException;
@@ -65,7 +65,9 @@ public class UserService {
 		BeanUtils.copyProperties(form, user);
 
 		// 作成
-		return userRepository.save(user);
+		userRepository.save(user);
+
+		return userRepository.getOne(user.getId());
 	}
 
 	/**
@@ -90,7 +92,9 @@ public class UserService {
 		BeanUtils.copyProperties(form, user);
 
 		// 更新
-		return userRepository.save(user);
+		userRepository.save(user);
+
+		return userRepository.getOne(user.getId());
 	}
 
 	/**

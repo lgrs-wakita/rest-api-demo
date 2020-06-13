@@ -22,7 +22,7 @@ public class RestApiDemoApplication implements WebMvcConfigurer {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.securityContext().disable().csrf().disable();
+			http.securityContext().disable();
 		}
 
 	}
