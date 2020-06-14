@@ -9,4 +9,6 @@ import com.example.restapidemo.data.entity.User;
  */
 public interface UserRepository extends AbstractRepository<User> {
 
+	User findByEmail(String email);
+
 }

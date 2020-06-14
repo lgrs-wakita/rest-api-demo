@@ -2,6 +2,7 @@ package com.example.restapidemo.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import com.example.restapidemo.common.SessionNames;
+import com.example.restapidemo.controller.form.LoginForm;
 import com.example.restapidemo.controller.form.UserForm;
 import com.example.restapidemo.data.entity.User;
 import com.example.restapidemo.data.repository.UserRepository;
@@ -115,6 +118,42 @@ public class UserService {
 	public void delete(Long id) {
 		// 削除。なかったら例外スロー。
 		userRepository.delete(userRepository.findById(id).orElseThrow());
+	}
+
+	/**
+	 * ログイン処理
+	 * 
+	 * @param form
+	 * @param bindingResult
+	 * @param session
+	 * @return
+	 */
+	public User login(LoginForm form, BindingResult bindingResult, HttpSession session) {
+
+		// 入力チェック
+		if (bindingResult.hasErrors()) {
+			throw new ValidationErrorException(bindingResult);
+		}
+
+		// ユーザー取得
+		User user = userRepository.findByEmail(form.getEmail());
+		if (user == null) {
+			// 存在しないメアド
+			bindingResult.rejectValue("email", "error.login");
+			throw new ValidationErrorException(bindingResult);
+		}
+
+		// パスワードチェック
+		if (!passwordEncoder.matches(form.getPassword(), user.getPassword())) {
+			// パスワード間違い
+			bindingResult.rejectValue("email", "error.login");
+			throw new ValidationErrorException(bindingResult);
+		}
+
+		// セッションにセット
+		session.setAttribute(SessionNames.LOGIN_USER.name(), user);
+
+		return user;
 	}
 
 }
