@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.restapidemo.common.Public;
 import com.example.restapidemo.controller.form.LoginForm;
 import com.example.restapidemo.data.entity.User;
 import com.example.restapidemo.service.UserService;
@@ -32,9 +33,21 @@ public class LoginController {
 	 * @param session
 	 * @return
 	 */
-	@PostMapping
-	public User login(@RequestBody @Valid LoginForm form, BindingResult bindingResult, HttpSession session) {
+	@Public
+	@PostMapping("/signin")
+	public User signin(@RequestBody @Valid LoginForm form, BindingResult bindingResult, HttpSession session) {
 		return userService.login(form, bindingResult, session);
+	}
+
+	/**
+	 * ログアウト
+	 * 
+	 * @param session
+	 */
+	@Public
+	@PostMapping("/signout")
+	public void signout(HttpSession session) {
+		session.invalidate();
 	}
 
 }

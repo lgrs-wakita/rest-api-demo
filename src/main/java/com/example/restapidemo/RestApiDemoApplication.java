@@ -29,8 +29,8 @@ public class RestApiDemoApplication implements WebMvcConfigurer {
 	public static class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.securityContext().disable();
+		protected void configure(HttpSecurity httpSecurity) throws Exception {
+			httpSecurity.securityContext().disable();
 		}
 
 	}
@@ -50,7 +50,7 @@ public class RestApiDemoApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns("/v2/api-docs",
+		registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns("/csrf", "/v2/api-docs",
 				"/swagger-resources/**", "/swagger-ui.html", "/webjars/**");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}

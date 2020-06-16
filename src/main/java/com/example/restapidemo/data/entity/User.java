@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -24,6 +26,7 @@ public class User extends AbstractEntity {
 
 	private String email;
 
+	@JsonIgnore
 	private String password;
 
 }
