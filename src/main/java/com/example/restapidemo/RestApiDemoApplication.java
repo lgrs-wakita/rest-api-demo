@@ -54,4 +54,5 @@ public class RestApiDemoApplication implements WebMvcConfigurer {
 				"/swagger-resources/**", "/swagger-ui.html", "/webjars/**");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}
+
 }
